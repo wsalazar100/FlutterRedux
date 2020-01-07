@@ -20,8 +20,8 @@ class Poliza {
     String fecVigDesde;
     String fecVigHasta;
     String agente;
-    int sumaAsegurada;
-    int premio;
+    double sumaAsegurada;
+    double premio;
     String moneda;
 
     Poliza({
@@ -94,3 +94,32 @@ class Poliza {
         "moneda": moneda,
     };
 }
+
+
+class Polizas {
+  List<Poliza> items = new List<Poliza>();
+  Polizas.fromJsonList( List<dynamic> jsonList  ) { 
+    if ( jsonList == null ) return;
+
+    for ( var item in jsonList  ) {
+      final Poliza poliza = new Poliza.fromJson(item);
+      items.add( poliza );
+    }
+   }
+
+
+ Polizas.fromMapa( Map<String, dynamic> mapa  ) { 
+    if ( mapa == null ) return ;
+
+    mapa.forEach((id,pol) {
+      final Poliza poliza = new Poliza.fromJson(pol);
+      //poliza.idPv = id; 
+      items.add( poliza );
+    });
+    
+    
+   }
+
+
+}
+
