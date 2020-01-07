@@ -65,6 +65,7 @@ class _PolizaPaginaState extends State<PolizaPagina> {
           child: InkWell(
             splashColor: Colors.blue.withAlpha(30),
             onTap: () {
+              Navigator.pushNamed(context, '/accion');
               print('Card tapped.');
             },
             child: Container(
