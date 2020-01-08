@@ -98,6 +98,8 @@ class Poliza {
 
 class Polizas {
   List<Poliza> items = new List<Poliza>();
+
+  Polizas();
   Polizas.fromJsonList( List<dynamic> jsonList  ) { 
     if ( jsonList == null ) return;
 
@@ -116,7 +118,6 @@ class Polizas {
       //poliza.idPv = id; 
       items.add( poliza );
     });
-    
     
    }
 

@@ -1,26 +1,11 @@
 
 
-import 'package:appdosinteligente/api/api_db.dart';
-import 'package:appdosinteligente/modelo/app_estado.dart';
+import 'package:appdosinteligente/modelo/menu_model.dart';
 import 'package:appdosinteligente/modelo/poliza_model.dart';
-import 'package:redux/redux.dart';
-import 'package:redux_thunk/redux_thunk.dart';
 
 
 /// 
-/// Acciones del Middleware
-/// 
-ThunkAction<AppEstado> obtenerPolizaAccion = (Store<AppEstado> almacen) async {
-  
-  final apidb  = ApiDB();
-  final polizas = await apidb.obtenerPoliza();
-
-  almacen.dispatch(obtenerPoliza(polizas));
-
-};
-
-/// 
-/// Actions del reducer
+/// Actions del reducer POLIZA
 /// 
 
 class obtenerPoliza {
@@ -43,6 +28,20 @@ class actualizarPoliza {
    Poliza poliza;
    actualizarPoliza(this.poliza);
 }
+
+
+/// 
+/// Actions del reducer MENU
+/// 
+
+class obtenerMenu {
+   List<Menu> _menus;
+   obtenerMenu(this._menus);
+   List<Menu> get menus => this._menus;
+}
+
+
+
 
 
 

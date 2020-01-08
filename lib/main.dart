@@ -1,21 +1,22 @@
 import 'package:appdosinteligente/pagina/accion_pagina.dart';
+import 'package:appdosinteligente/pagina/login_pagina.dart';
 import 'package:appdosinteligente/pagina/poliza_pagina.dart';
-import 'package:appdosinteligente/redux/acciones.dart';
+
 import 'package:appdosinteligente/redux/reducer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter_redux/flutter_redux.dart';
+
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 
 import 'modelo/app_estado.dart';
-import 'modelo/poliza_model.dart';
+
 
 void main() { 
-  List<Poliza> _polizas = [new Poliza(asegurado: "No definido")];
+  EstadoInicial estadoInicial = new EstadoInicial();
 
 
-  final AppEstado _inicialEstado = new AppEstado(polizas: _polizas);
+  final AppEstado _inicialEstado = new AppEstado(estadoInicial: estadoInicial);
   final Store<AppEstado> _almacen =  new Store<AppEstado>(reducer, initialState: _inicialEstado, middleware: [thunkMiddleware]);
   runApp(MyApp(_almacen));
 
@@ -38,18 +39,21 @@ class MyApp extends StatelessWidget {
 _crearApp() {
     return MaterialApp(
       title: 'Seguro Inteligente',
+    
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => PolizaPagina(
+        '/': (context) => LoginPagina(),
+        '/poliza': (context) => PolizaPagina(
           onInit: (){
               //StoreProvider.of<AppEstado>(context).dispatch(obtenerPolizaAccion);
           }
 
         ),
-        '/accion': (context) => AccionPagina()
+        '/accion': (context) => AccionPagina(),
+        
       },
 
     );

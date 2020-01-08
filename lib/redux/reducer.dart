@@ -29,7 +29,10 @@ AppEstado reducer(AppEstado previoEstado, dynamic accion) {
                                        .toList();
   }
 
-
+ // obtener
+  if (accion is obtenerMenu) {
+      nuevoEstado.menus = accion.menus;
+  }
 
   return nuevoEstado;
 
