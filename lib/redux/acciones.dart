@@ -1,7 +1,9 @@
 
 
 import 'package:appdosinteligente/modelo/menu_model.dart';
+import 'package:appdosinteligente/modelo/parametro_model.dart';
 import 'package:appdosinteligente/modelo/poliza_model.dart';
+import 'package:appdosinteligente/modelo/usuario_modelo.dart';
 
 
 /// 
@@ -13,6 +15,15 @@ class obtenerPoliza {
    obtenerPoliza(this._polizas);
    List<Poliza> get polizas => this._polizas;
 }
+
+
+
+class CambiarParametroConsulta {
+   ParametroConsulta _parametroConsulta;
+   CambiarParametroConsulta(this._parametroConsulta);
+   ParametroConsulta get parametroConsulta => this._parametroConsulta;
+}
+
 
 class agregarPoliza {
   Poliza poliza;
@@ -41,6 +52,16 @@ class obtenerMenu {
 }
 
 
+
+/// 
+/// Actions del reducer USUARIO
+/// 
+
+class ObtenerUsuario {
+   UsuarioModel _usuario;
+   ObtenerUsuario(this._usuario);
+   UsuarioModel get usuario => this._usuario;
+}
 
 
 

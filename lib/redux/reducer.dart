@@ -12,6 +12,13 @@ AppEstado reducer(AppEstado previoEstado, dynamic accion) {
   }
 
 
+
+  if (accion is CambiarParametroConsulta) {
+      nuevoEstado.parametroConsulta = accion.parametroConsulta;
+  }
+
+
+
   // agrega
   if (accion is agregarPoliza) {
       nuevoEstado.polizas.add(accion.poliza);
@@ -33,6 +40,14 @@ AppEstado reducer(AppEstado previoEstado, dynamic accion) {
   if (accion is obtenerMenu) {
       nuevoEstado.menus = accion.menus;
   }
+
+
+  // obtener
+  if (accion is ObtenerUsuario) {
+      nuevoEstado.usuario = accion.usuario;
+  }
+
+
 
   return nuevoEstado;
 

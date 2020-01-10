@@ -1,6 +1,8 @@
 
 import 'package:appdosinteligente/modelo/app_estado.dart';
+import 'package:appdosinteligente/modelo/parametro_model.dart';
 import 'package:appdosinteligente/modelo/poliza_model.dart';
+import 'package:appdosinteligente/redux/acciones.dart';
 
 import 'package:appdosinteligente/redux/acciones_middleware.dart';
 
@@ -20,6 +22,11 @@ class PolizaPagina extends StatefulWidget {
   obtenerPoliza(context) {
     StoreProvider.of<AppEstado>(context).dispatch(obtenerPolizaAccion);
   }
+
+  getPolizaPorAsegurado(context, parametroConsulta) {
+    StoreProvider.of<AppEstado>(context).dispatch(getPolizaPorAseguradoAccion(parametroConsulta));
+  }
+
 
   obtenerMenu(context) {
     StoreProvider.of<AppEstado>(context).dispatch(obtenerMenuAccion);
@@ -175,6 +182,10 @@ class _PolizaPaginaState extends State<PolizaPagina> {
       icon: Icon(Icons.search),
       backgroundColor: Colors.pink,
       onPressed: () {
+
+        //widget.getPolizaPorAsegurado(context,new ParametroConsulta(100));
+
+
         widget.obtenerPoliza(context);
       },
     );

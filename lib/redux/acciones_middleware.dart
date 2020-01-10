@@ -2,11 +2,15 @@
 
 import 'package:appdosinteligente/api/api_db.dart';
 import 'package:appdosinteligente/modelo/app_estado.dart';
-import 'package:appdosinteligente/modelo/login_modelo.dart';
+import 'package:appdosinteligente/modelo/parametro_model.dart';
+import 'package:appdosinteligente/modelo/usuario_modelo.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 
 import 'acciones.dart';
+
+
+
 
 /// 
 /// Acciones del Middleware POLIZA
@@ -14,7 +18,9 @@ import 'acciones.dart';
 ThunkAction<AppEstado> obtenerPolizaAccion = (Store<AppEstado> almacen) async {
   
   final apidb  = ApiDB();
+
   final polizas = await apidb.obtenerPoliza();
+
 
   almacen.dispatch(obtenerPoliza(polizas));
 
@@ -33,12 +39,32 @@ ThunkAction<AppEstado> obtenerMenuAccion = (Store<AppEstado> almacen) async {
 
 };
 
-
-ThunkAction<AppEstado> autenticarUsuarioAccion = (Store<AppEstado> almacen) async {
+ThunkAction<AppEstado> getPolizaPorAseguradoAccion (ParametroConsulta parametro)  {
   
-  final apidb  = ApiDB();
-  //final menus = await apidb.autenticarUsuario(login);
+  return ( Store<AppEstado> almacen) async  {
 
-  //almacen.dispatch(obtenerMenu(menus));
+       final apidb  = ApiDB();
+       final polizas = await apidb.obtenerPolizaPorAsegurado( parametro );
 
-};
+       almacen.dispatch(obtenerPoliza(polizas));
+  };
+
+}
+
+/// 
+/// Acciones del Middleware LOGIN
+/// 
+ThunkAction<AppEstado> loginAccion (LoginModel login)  {
+  
+  return ( Store<AppEstado> almacen) async  {
+
+       final apidb  = ApiDB();
+       UsuarioModel usuario = await apidb.login(login);
+
+       almacen.dispatch(ObtenerUsuario(usuario));
+  };
+
+}
+
+
+
