@@ -42,13 +42,26 @@ AppEstado reducer(AppEstado previoEstado, dynamic accion) {
   }
 
 
-  // obtener
+  // REDUCER USUARIO
   if (accion is ObtenerUsuario) {
       nuevoEstado.usuario = accion.usuario;
   }
 
+  // REDUCER NOTIFICACION
+  if (accion is AgregarNotificacion) {
+      nuevoEstado.notificaciones.add(accion.notificacion);
+  }
 
+  if (accion is BorrarNotificacion) {
+      nuevoEstado.notificaciones.removeWhere((n)=> n.idnotificacion == accion.idnotificacion);
+  }
 
+  if (accion is BorrarTodaNotificacion) {
+      nuevoEstado.notificaciones = [];
+  }
+  if (accion is ObtenerNotificaciones) {
+      nuevoEstado.notificaciones = accion.notificaciones;
+  }
   return nuevoEstado;
 
 

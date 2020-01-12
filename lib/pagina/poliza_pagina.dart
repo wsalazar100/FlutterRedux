@@ -1,13 +1,14 @@
 
+import 'package:appdosinteligente/datos/datos_prueba.dart';
 import 'package:appdosinteligente/modelo/app_estado.dart';
-import 'package:appdosinteligente/modelo/parametro_model.dart';
+import 'package:appdosinteligente/modelo/notificacion_model.dart';
 import 'package:appdosinteligente/modelo/poliza_model.dart';
-import 'package:appdosinteligente/redux/acciones.dart';
 
 import 'package:appdosinteligente/redux/acciones_middleware.dart';
 
 import 'package:appdosinteligente/tema/poliza_estilo.dart';
 import 'package:appdosinteligente/util/interfase.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
@@ -158,13 +159,13 @@ class _PolizaPaginaState extends State<PolizaPagina> {
       child: Container(
           padding: EdgeInsets.all(15),
           width: 300,
-          height: 100,
+          height: 150,
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
                   'Nro de Poliza: ${poliza.nroPol.toString()}',
-                  style: tituloPoliza,
+                  style: tituloCard,
                 ),
                 Text(
                   'Vigencia: ${poliza.fecVigDesde} - ${poliza.fecVigHasta} ',
@@ -172,9 +173,22 @@ class _PolizaPaginaState extends State<PolizaPagina> {
                 ),
                 Text('Asegurado: ${poliza.asegurado}'),
                 Text('Ramo: ${poliza.ramo}'),
+                _crearIconoPDF(),
               ])),
     ));
   }
+
+  _crearIconoPDF(){
+    return IconButton(
+        icon: Icon(Icons.file_download),
+        tooltip: 'Abrir PDF de la poliza',
+        onPressed: () async {
+           String url = "https://www.chubb.com/ec-es/_assets/documents/condiciones-generales-poliza-de-seguro-de-vehiculos.pdf";
+           await launch(url);
+        },
+      );
+  }
+
 
   _crearBoton(AppEstado appEstado) {
     return FloatingActionButton.extended(
@@ -187,6 +201,9 @@ class _PolizaPaginaState extends State<PolizaPagina> {
 
 
         widget.obtenerPoliza(context);
+        
+        StoreProvider.of<AppEstado>(context).dispatch(agregarNotificacionAccion(notificacionPrueba));
+
       },
     );
   }

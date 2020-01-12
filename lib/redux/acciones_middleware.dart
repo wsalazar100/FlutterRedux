@@ -1,7 +1,10 @@
 
 
 import 'package:appdosinteligente/api/api_db.dart';
+
+import 'package:appdosinteligente/api/api_db_local.dart';
 import 'package:appdosinteligente/modelo/app_estado.dart';
+import 'package:appdosinteligente/modelo/notificacion_model.dart';
 import 'package:appdosinteligente/modelo/parametro_model.dart';
 import 'package:appdosinteligente/modelo/usuario_modelo.dart';
 import 'package:redux/redux.dart';
@@ -66,5 +69,34 @@ ThunkAction<AppEstado> loginAccion (LoginModel login)  {
 
 }
 
+/// 
+/// Acciones del Middleware NOTIFICACION
+/// 
+
+ThunkAction<AppEstado> agregarNotificacionAccion (NotificacionModel notificacion)  {
+  return ( Store<AppEstado> almacen) async  {
+       //almacen.dispatch(AgregarNotificacion(notificacion));
+       await ApiDBLocal.db.nuevaNoti(notificacion);
+       obtenerNotificacionesAccion(almacen);
+  };
+}
+
+ThunkAction<AppEstado> borrarNotificacionAccion (int idnotificacion)  {
+  return ( Store<AppEstado> almacen) async  {
+      await ApiDBLocal.db.deleteNotificacion(idnotificacion);
+       almacen.dispatch(BorrarNotificacion(idnotificacion));
+  };
+} // fin 
+
+ThunkAction<AppEstado> borrarTodaNotificacionAccion = (Store<AppEstado> almacen) async {
+  await ApiDBLocal.db.deleteAll();
+  almacen.dispatch(BorrarTodaNotificacion);
 
 
+};
+
+ThunkAction<AppEstado> obtenerNotificacionesAccion = (Store<AppEstado> almacen) async {
+  List<NotificacionModel> lst = await ApiDBLocal.db.getTodosNotificacion();
+  almacen.dispatch(ObtenerNotificaciones(lst));
+
+};

@@ -1,5 +1,7 @@
 
+import 'package:appdosinteligente/modelo/notificacion_model.dart';
 import 'package:appdosinteligente/modelo/poliza_model.dart';
+import 'package:appdosinteligente/util/tiempo.dart';
 
 Poliza pol01 = new Poliza(
       agente : "Pablo Cobo",
@@ -18,4 +20,13 @@ Poliza pol01 = new Poliza(
       sumaAsegurada : 12000.01
 );
 
+NotificacionModel notificacionPrueba = new NotificacionModel(
+           idnotificacion: 0,
+           titulo: 'nd',
+           cuerpo: 'nd',
+           fecha: getFechaActual(),
+           descripcion: 'prueba', 
+           pagina: '/notificacion'
+           );
+           
 

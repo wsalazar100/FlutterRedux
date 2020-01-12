@@ -27,11 +27,18 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   firebase_messaging: ^6.0.9
-
+  intl: ^0.16.1
+  sqflite: ^1.1.5
+  path_provider: 
+  url_launcher: ^5.0.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  flutter_launcher_icons: ^0.7.4
+flutter_icons:
+  android: "launcher_icon" 
+  ios: true
+  image_path: "assets/icon/carro_azul.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

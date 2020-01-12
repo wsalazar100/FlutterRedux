@@ -1,4 +1,5 @@
 
+import 'package:appdosinteligente/modelo/notificacion_model.dart';
 import 'package:appdosinteligente/modelo/parametro_model.dart';
 import 'package:appdosinteligente/modelo/poliza_model.dart';
 import 'package:appdosinteligente/modelo/usuario_modelo.dart';
@@ -11,6 +12,7 @@ class EstadoInicial {
    List<Menu> menus = [new Menu(titulo: "No definido")];
    UsuarioModel usuario = new UsuarioModel();
    ParametroConsulta parametroConsulta = new ParametroConsulta(200);
+   List<NotificacionModel> notificaciones = [new NotificacionModel()];
 }
 
 class AppEstado {
@@ -18,6 +20,7 @@ class AppEstado {
   List<Menu> menus;
   ParametroConsulta parametroConsulta;
   UsuarioModel usuario;
+  List<NotificacionModel> notificaciones;
 
 
   AppEstado({@required EstadoInicial estadoInicial}) {
@@ -25,6 +28,7 @@ class AppEstado {
       this.menus = estadoInicial.menus;
       this.parametroConsulta = estadoInicial.parametroConsulta;
       this.usuario = estadoInicial.usuario;
+      this.notificaciones = estadoInicial.notificaciones;
   }
 
 
@@ -33,6 +37,7 @@ class AppEstado {
     menus = otroEstado.menus;
     parametroConsulta = otroEstado.parametroConsulta;
     usuario = otroEstado.usuario;
+    notificaciones = otroEstado.notificaciones;
   }
 
   

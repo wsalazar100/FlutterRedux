@@ -1,6 +1,7 @@
 
 
 import 'package:appdosinteligente/modelo/menu_model.dart';
+import 'package:appdosinteligente/modelo/notificacion_model.dart';
 import 'package:appdosinteligente/modelo/parametro_model.dart';
 import 'package:appdosinteligente/modelo/poliza_model.dart';
 import 'package:appdosinteligente/modelo/usuario_modelo.dart';
@@ -64,8 +65,27 @@ class ObtenerUsuario {
 }
 
 
+/// 
+/// Actions del reducer NOTIFICACION
+/// 
+class AgregarNotificacion {
+    NotificacionModel _notificacion;
+    AgregarNotificacion(this._notificacion);
+    NotificacionModel get notificacion => this._notificacion;
+}
 
+class BorrarNotificacion {
+    int _idnotificacion;
+    BorrarNotificacion(this._idnotificacion);
+    int get idnotificacion => this._idnotificacion;
+}
 
+class BorrarTodaNotificacion {
+    BorrarTodaNotificacion();
+}
 
-
-
+class ObtenerNotificaciones {
+    List<NotificacionModel> _notificaciones;
+    ObtenerNotificaciones(this._notificaciones);
+    List<NotificacionModel> get notificaciones => this._notificaciones;
+}

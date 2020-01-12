@@ -1,5 +1,6 @@
 import 'package:appdosinteligente/modelo/app_estado.dart';
 import 'package:appdosinteligente/modelo/usuario_modelo.dart';
+import 'package:appdosinteligente/notificacion_push/notificacion_push.dart';
 import 'package:appdosinteligente/redux/acciones_middleware.dart';
 
 import 'package:flutter/material.dart';
@@ -8,22 +9,18 @@ import 'package:flutter_redux/flutter_redux.dart';
 class LoginPagina extends StatefulWidget {
   LoginPagina({Key key}) : super(key: key);
 
-
-
   @override
   _LoginPaginaState createState() => _LoginPaginaState();
 }
 
 class _LoginPaginaState extends State<LoginPagina> {
-    AppEstado estado;
-    loginUsuario(BuildContext context, LoginModel login) async {
-       await StoreProvider.of<AppEstado>(context).dispatch(loginAccion(login));
-    }
-
+  AppEstado estado;
+  loginUsuario(BuildContext context, LoginModel login) async {
+    await StoreProvider.of<AppEstado>(context).dispatch(loginAccion(login));
+  }
 
   @override
   Widget build(BuildContext context) {
-    
     // Conectamos la pagina con el almacen
     return Container(
         child: StoreConnector<AppEstado, AppEstado>(
@@ -157,13 +154,11 @@ class _LoginPaginaState extends State<LoginPagina> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0),
       child: TextField(
-        
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
           icon: Icon(Icons.alternate_email, color: Colors.deepPurple),
           hintText: 'ejemplo@correo.com',
           labelText: 'Correo electrónico',
-          
         ),
         onChanged: (value) {
           login.usuario = value;
@@ -188,82 +183,37 @@ class _LoginPaginaState extends State<LoginPagina> {
     );
   }
 
-  Widget _crearBotonOld(BuildContext context, LoginModel login) {
-    return Container(
-        child: StoreConnector<AppEstado, AppEstado>(
-            converter: (almacen) => almacen.state,
-            builder: (context, AppEstado appEstado) {
-              return RaisedButton(
-                child: Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
-                  child: Text('Ingresar'),
-                ),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.0)),
-                elevation: 0.0,
-                color: Colors.deepPurple,
-                textColor: Colors.white,
-                
-                onPressed: () async {
-                  print("Login esta autenticado");
-                  print(appEstado.usuario.estaAutenticado);
-                  
-                  await loginUsuario(context, login);
-
-                  
-                  if (appEstado.usuario.estaAutenticado) {                      
-                    print("Navegando hacia poliza");
-                      Navigator.pushNamed(context, "/poliza"); }
-
-                  else {
-                     print ("Usuario NO autenticado ======>");
-                     print(appEstado.usuario.mensaje);  
-                  }
-                     
-                },
-                // onPressed: snapshot.hasData ? ()=> _login(bloc, context) : null
-              );
-            }));
-  }
-
   Widget _crearBoton(BuildContext context, LoginModel login) {
-              return RaisedButton(
-                child: Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
-                  child: Text('Ingresar'),
-                ),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.0)),
-                elevation: 0.0,
-                color: Colors.deepPurple,
-                textColor: Colors.white,
-                
-                onPressed: () async {
-                  print("Login esta autenticado");
-                  print(estado.usuario.estaAutenticado);
-                  
-                  await loginUsuario(context, login);
+    return RaisedButton(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
+        child: Text('Ingresar'),
+      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+      elevation: 0.0,
+      color: Colors.deepPurple,
+      textColor: Colors.white,
 
-                  
-                  if (estado.usuario.estaAutenticado) {                      
-                    print("Navegando hacia poliza");
-                      Navigator.pushNamed(context, "/poliza"); }
+      onPressed: () async {
+        print("Login esta autenticado");
+        print(estado.usuario.estaAutenticado);
 
-                  else {
-                     print ("Usuario NO autenticado ======>");
-                     print(estado.usuario.mensaje);  
-                  }
-                     
-                },
-                // onPressed: snapshot.hasData ? ()=> _login(bloc, context) : null
-              );
+        // await loginUsuario(context, login);
 
-            
+        // if (estado.usuario.estaAutenticado) {
+        //   print("Navegando hacia poliza");
+        //   Navigator.pushNamed(context, "/poliza");
+        // } else {
+        //   print("Usuario NO autenticado ======>");
+        //   print(estado.usuario.mensaje);
+        // }
+
+        Navigator.pushNamed(context, "/poliza");
+
+        //iniciar notificacion
+        NotificacionPush notiPush = new NotificacionPush(context);
+      },
+      // onPressed: snapshot.hasData ? ()=> _login(bloc, context) : null
+    );
   }
-
 }
-
-
-

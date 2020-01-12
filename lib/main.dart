@@ -1,5 +1,6 @@
 import 'package:appdosinteligente/pagina/accion_pagina.dart';
 import 'package:appdosinteligente/pagina/login_pagina.dart';
+import 'package:appdosinteligente/pagina/notificacion_pagina.dart';
 import 'package:appdosinteligente/pagina/poliza_pagina.dart';
 
 import 'package:appdosinteligente/redux/reducer.dart';
@@ -53,6 +54,7 @@ _crearApp() {
 
         ),
         '/accion': (context) => AccionPagina(),
+        '/notificacion': (context) => NotificacionPagina(),
         
       },
 

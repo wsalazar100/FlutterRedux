@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "953343180482",
+    "firebase_url": "https://segurointeligente-d9f49.firebaseio.com",
+    "project_id": "segurointeligente-d9f49",
+    "storage_bucket": "segurointeligente-d9f49.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:953343180482:android:8449403677ce01c3f3455b",
+        "android_client_info": {
+          "package_name": "com.example.appdosinteligente"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "953343180482-mfr7uqjb4ad64b1url9vk9eu54j982lk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.appdosinteligente",
+            "certificate_hash": "ed91fd54a1f3225adef717c2ebddb2e43079e910"
+          }
+        },
+        {
+          "client_id": "953343180482-ae2bvn2rkgm4ct8me5agfot5s2c419r0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_ZT9UaXybcYaYI33NJAAA7w6tQ3R8V1c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "953343180482-ae2bvn2rkgm4ct8me5agfot5s2c419r0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
