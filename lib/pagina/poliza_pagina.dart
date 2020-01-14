@@ -1,4 +1,5 @@
 
+import 'package:appdosinteligente/constantes/menu_lateral.dart';
 import 'package:appdosinteligente/datos/datos_prueba.dart';
 import 'package:appdosinteligente/modelo/app_estado.dart';
 import 'package:appdosinteligente/modelo/notificacion_model.dart';
@@ -11,6 +12,7 @@ import 'package:appdosinteligente/util/interfase.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+
 
 
 
@@ -57,6 +59,7 @@ class _PolizaPaginaState extends State<PolizaPagina> {
 
   _crearPagina(AppEstado appEstado) {
     return Scaffold(
+
       appBar: _crearAppBar(),
       drawer: _crearLateral(context),
       body: _crearBody(appEstado),
@@ -76,8 +79,8 @@ class _PolizaPaginaState extends State<PolizaPagina> {
 
     ListTile getNavItem(var icon, String s, String routeName) {
       return ListTile(
-        leading: Icon(icon),
-        title: Text(s),
+        leading: Icon(icon,size:35, color: Colors.black),
+        title: Text(s,style:itemLateral ,),
         onTap: () {
           setState(() {
             // pop closes the drawer
@@ -90,42 +93,65 @@ class _PolizaPaginaState extends State<PolizaPagina> {
     }
 
     var myNavChildren = [
-      headerChild,
+      
+      // headerChild,
+      SizedBox(height:60 ,),
       getNavItem(Icons.person, "Login", "/"),
       getNavItem(Icons.folder_open, "Poliza", "/poliza"),
-      getNavItem(Icons.local_hospital, "Emergencia", "/emergencia"),
+      // getNavItem(Icons.local_hospital, "Emergencia", "/emergencia"),
       getNavItem(Icons.map, "Localizacion", "/localizacion"),
       getNavItem(Icons.notifications, "Notificacion", "/notificacion"),
       getNavItem(Icons.people, "Proveedores", "/proveedor"),
-      getNavItem(Icons.chat, "Chatear con asistente", "/asistente"),
+      // getNavItem(Icons.chat, "Chatear con asistente", "/asistente"),
       getNavItem(Icons.account_circle, "Configuracion", "/configuracion"),
       getNavItem(Icons.close, "Salir", "/salida"),
 
-       nosotrosChild
+      //  nosotrosChild
     ];
 
     ListView listView = ListView(children: myNavChildren);
 
+
     return Drawer(
-      child: listView,
+      child:  Container(
+          decoration: _crearFondoLateral(),
+          child: listView
+      )
     );
+    
+   
+
   }
 
+   _crearFondoLateral() {
+      return BoxDecoration(
+            image: new DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage('assets/images/fondo_lateral.jpg'))
+          );
+   }
+   _crearFondoPagina() {
+      return BoxDecoration(
+            image: new DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage('assets/images/fondo_pagina.jpg'))
+          );
+   }
 
-    ListTile _crearOpcion(var icon, String s, String routeName) {
-      return ListTile(
-        leading: Icon(icon, color: Colors.pinkAccent),
-        title: Text(s),
-        onTap: () {
-          setState(() {
-            // pop closes the drawer
-            Navigator.of(context).pop();
-            // navigate to the route
-            Navigator.of(context).pushNamed(routeName);
-          });
-        },
-      );
-    }
+    // ListTile _crearOpcion(var icon, String s, String routeName) {
+    //   return ListTile(
+    //     leading: Icon(icon, color: Colors.black26),
+    //     title: Text(s),
+    //     onTap: () {
+    //       setState(() {
+    //         // pop closes the drawer
+    //         Navigator.of(context).pop();
+    //         // navigate to the route
+    //         Navigator.of(context).pushNamed(routeName);
+    //       });
+    //     },
+    //   );
+    // }
 
 
   _crearAppBar() {
@@ -134,9 +160,17 @@ class _PolizaPaginaState extends State<PolizaPagina> {
 
   _crearBody(AppEstado appEstado) {
     List<Poliza> lst = appEstado.polizas;
+    return Container(
+      decoration: _crearFondoPagina(),
+      child: _crearContenido(appEstado.polizas),);
+
+
+  }
+
+  _crearContenido(List<Poliza> lst ){
     return Stack(
       children: <Widget>[
-        crearGradientePagina(),
+        // crearGradientePagina(),
         ListView.builder(
           itemCount: lst.length,
           itemBuilder: (BuildContext context, int index) => ListTile(
@@ -180,7 +214,7 @@ class _PolizaPaginaState extends State<PolizaPagina> {
 
   _crearIconoPDF(){
     return IconButton(
-        icon: Icon(Icons.file_download),
+        icon: Icon(Icons.file_download, color: Colors.pink),
         tooltip: 'Abrir PDF de la poliza',
         onPressed: () async {
            String url = "https://www.chubb.com/ec-es/_assets/documents/condiciones-generales-poliza-de-seguro-de-vehiculos.pdf";
@@ -206,5 +240,9 @@ class _PolizaPaginaState extends State<PolizaPagina> {
 
       },
     );
-  }
+  } // fin 
+
+
+
+
 }

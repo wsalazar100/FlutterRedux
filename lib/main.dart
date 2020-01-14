@@ -2,6 +2,9 @@ import 'package:appdosinteligente/pagina/accion_pagina.dart';
 import 'package:appdosinteligente/pagina/login_pagina.dart';
 import 'package:appdosinteligente/pagina/notificacion_pagina.dart';
 import 'package:appdosinteligente/pagina/poliza_pagina.dart';
+import 'package:appdosinteligente/pagina/proveedor_pagina.dart';
+import 'package:appdosinteligente/pagina/usuario_pagina.dart';
+import 'package:appdosinteligente/redux/acciones_middleware.dart';
 
 import 'package:appdosinteligente/redux/reducer.dart';
 import 'package:flutter/material.dart';
@@ -55,6 +58,13 @@ _crearApp() {
         ),
         '/accion': (context) => AccionPagina(),
         '/notificacion': (context) => NotificacionPagina(),
+        '/configuracion': (context) => UsuarioPagina(),
+
+        '/proveedor': (context) => ProveedorPagina(
+           onInit: ()  {
+              StoreProvider.of<AppEstado>(context).dispatch(obtenerUbicacionAccion);
+           }
+        ) ,
         
       },
 

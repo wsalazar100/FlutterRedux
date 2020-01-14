@@ -51,6 +51,14 @@ class _NotificacionPaginaState extends State<NotificacionPagina> {
     return AppBar(title: Text("Notificaciones"));
   }
 
+_crearFondoPagina() {
+      return BoxDecoration(
+            image: new DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage('assets/images/fondo_notificacion.jpg'))
+          );
+   }
+
   _crearBodyOld() {
     List<NotificacionModel> lst = _appEstado.notificaciones;
     return Stack(
@@ -67,17 +75,23 @@ class _NotificacionPaginaState extends State<NotificacionPagina> {
 
   _crearBody() {
     List<NotificacionModel> lst = _appEstado.notificaciones;
-    return SingleChildScrollView(
+    return Container(
+      decoration: _crearFondoPagina() ,
+    child:  SingleChildScrollView(
+      
       child: Column(children: lst.map((noti) => _crearCard(noti)).toList()),
+    ),
+      
     );
   }
 
   Widget _crearCard(NotificacionModel notificacion) {
     return Dismissible(
       key: UniqueKey(),
-      background: Container(color: Colors.red),
+      background: Container(color: Colors.pink, child: Text('Borrar'),),
       onDismissed: (direction) =>borrarNotificacion(notificacion.idnotificacion),
-      child: Container(
+      child: Card(
+        child:Container(
           padding: EdgeInsets.all(15),
           width: double.infinity,
           height: 100,
@@ -91,13 +105,13 @@ class _NotificacionPaginaState extends State<NotificacionPagina> {
                 ),
                 Text(
                   'idnotificacion: ${notificacion.idnotificacion}',
-                  style: cuerpo,
+                  style: detalleNotificacion,
                 ),
                 Text(
                   'Descripcion: ${notificacion.descripcion}',
-                  style: cuerpo,
+                  style: detalleNotificacion,
                 ),
-              ])),
+              ])) ,)
     );
   }
 } //_NotificacionPaginaState

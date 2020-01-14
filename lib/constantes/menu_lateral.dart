@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 const colorOptIcono = Colors.pinkAccent;
 const tamanioOptIcono = 35.0;
 
+// const String CONS_FONDO_LATERAL = 'assets/images/fondoRojo.jpg';
+// const String CONS_FONDO_PAGINA = 'assets/images/carro_negro.jpg';
+
 // const cabeceraLateral = DrawerHeader(
 //           decoration: BoxDecoration(
             

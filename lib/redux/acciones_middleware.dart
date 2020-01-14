@@ -3,9 +3,12 @@
 import 'package:appdosinteligente/api/api_db.dart';
 
 import 'package:appdosinteligente/api/api_db_local.dart';
+import 'package:appdosinteligente/api/api_ubicacion.dart';
 import 'package:appdosinteligente/modelo/app_estado.dart';
 import 'package:appdosinteligente/modelo/notificacion_model.dart';
 import 'package:appdosinteligente/modelo/parametro_model.dart';
+import 'package:appdosinteligente/modelo/proveedor_model.dart';
+import 'package:appdosinteligente/modelo/ubicacion_model.dart';
 import 'package:appdosinteligente/modelo/usuario_modelo.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
@@ -26,6 +29,20 @@ ThunkAction<AppEstado> obtenerPolizaAccion = (Store<AppEstado> almacen) async {
 
 
   almacen.dispatch(obtenerPoliza(polizas));
+
+};
+
+/// 
+/// Acciones del Middleware PROVEEDOR
+/// 
+ThunkAction<AppEstado> obtenerProveedorAccion = (Store<AppEstado> almacen) async {
+  
+  final apidb  = ApiDB();
+
+  final List<ProveedorModel> proveedores = await apidb.obtenerProveedor();
+
+
+  almacen.dispatch(ObtenerProveedor(proveedores));
 
 };
 
@@ -98,5 +115,21 @@ ThunkAction<AppEstado> borrarTodaNotificacionAccion = (Store<AppEstado> almacen)
 ThunkAction<AppEstado> obtenerNotificacionesAccion = (Store<AppEstado> almacen) async {
   List<NotificacionModel> lst = await ApiDBLocal.db.getTodosNotificacion();
   almacen.dispatch(ObtenerNotificaciones(lst));
+
+};
+
+
+/// 
+/// Acciones del UBICACION MAPA
+/// 
+ThunkAction<AppEstado> obtenerUbicacionAccion = (Store<AppEstado> almacen) async {
+  
+  final apiUbicacion  = ApiUbicacion();
+
+  final UbicacionModel ubicacion = await apiUbicacion.getLocation();
+  print('Ubicacion ');
+  print('Ubicacion ==========> ${ubicacion.lat.toString()}   ${ubicacion.lon.toString()}');
+
+  almacen.dispatch(ObtenerUbicacion(ubicacion));
 
 };

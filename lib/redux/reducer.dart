@@ -10,6 +10,9 @@ AppEstado reducer(AppEstado previoEstado, dynamic accion) {
   if (accion is obtenerPoliza) {
       nuevoEstado.polizas = accion.polizas;
   }
+  if (accion is ObtenerProveedor) {
+      nuevoEstado.proveedores = accion.proveedores;
+  }
 
 
 
@@ -62,6 +65,12 @@ AppEstado reducer(AppEstado previoEstado, dynamic accion) {
   if (accion is ObtenerNotificaciones) {
       nuevoEstado.notificaciones = accion.notificaciones;
   }
+
+  // REDUCER UBICACION
+  if (accion is ObtenerUbicacion) {
+      nuevoEstado.ubicacion = accion.ubicacion;
+  }
+
   return nuevoEstado;
 
 

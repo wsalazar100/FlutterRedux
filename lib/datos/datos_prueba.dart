@@ -20,12 +20,13 @@ Poliza pol01 = new Poliza(
       sumaAsegurada : 12000.01
 );
 
+
 NotificacionModel notificacionPrueba = new NotificacionModel(
            idnotificacion: 0,
            titulo: 'nd',
            cuerpo: 'nd',
            fecha: getFechaActual(),
-           descripcion: 'prueba', 
+           descripcion: 'su poliza 3234 vencera en 15 dias', 
            pagina: '/notificacion'
            );
            

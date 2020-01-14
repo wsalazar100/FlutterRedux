@@ -4,6 +4,8 @@ import 'package:appdosinteligente/modelo/menu_model.dart';
 import 'package:appdosinteligente/modelo/notificacion_model.dart';
 import 'package:appdosinteligente/modelo/parametro_model.dart';
 import 'package:appdosinteligente/modelo/poliza_model.dart';
+import 'package:appdosinteligente/modelo/proveedor_model.dart';
+import 'package:appdosinteligente/modelo/ubicacion_model.dart';
 import 'package:appdosinteligente/modelo/usuario_modelo.dart';
 
 
@@ -17,6 +19,12 @@ class obtenerPoliza {
    List<Poliza> get polizas => this._polizas;
 }
 
+
+class ObtenerProveedor {
+   List<ProveedorModel> _proveedores;
+   ObtenerProveedor(this._proveedores);
+   List<ProveedorModel> get proveedores => this._proveedores;
+}
 
 
 class CambiarParametroConsulta {
@@ -89,3 +97,11 @@ class ObtenerNotificaciones {
     ObtenerNotificaciones(this._notificaciones);
     List<NotificacionModel> get notificaciones => this._notificaciones;
 }
+
+class ObtenerUbicacion {
+   UbicacionModel _ubicacion;
+   ObtenerUbicacion(this._ubicacion);
+   UbicacionModel get ubicacion => this._ubicacion;
+}
+
+
