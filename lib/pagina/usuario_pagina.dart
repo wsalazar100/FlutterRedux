@@ -53,49 +53,57 @@ class _UsuarioPaginaState extends State<UsuarioPagina> {
     final mitad = MediaQuery.of(context).size.width / 2.0;
 
     return Form(
-      key: _frmClave,
-      child: SingleChildScrollView(
-        child: Column(
-        children: <Widget>[
-          CampoTexto(
-            hintText: "Nombre",
+        key: _frmClave,
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              CampoTexto(
+                hintText: "Nombre",
+              ),
+              CampoTexto(
+                hintText: "Correo",
+                isEmail: true,
+              ),
+              CampoTexto(
+                hintText: "Dirección",
+              ),
+              CampoTexto(
+                hintText: "Celular",
+              ),
+              CampoTexto(
+                hintText: "Nro Documento",
+              ),
+              CampoTexto(
+                hintText: "Nro Tarjeta",
+              ),
+              CampoTexto(
+                hintText: "Puntos",
+              ),
+              _creartarjeta("assets/images/tarjeta_supermaxy.jpg"),
+
+              _botonGrabar()
+            ],
           ),
-          CampoTexto(
-            hintText: "Correo",
-            isEmail: true,
-          ),
-          CampoTexto(
-            hintText: "Dirección",
-          ),
-          CampoTexto(
-            hintText: "Celular",
-          ),
-          CampoTexto(
-            hintText: "Nro Documento",
-          ),
-          CampoTexto(
-            hintText: "Nro Tarjeta",
-          ),
-          CampoTexto(
-            hintText: "Puntos",
-          ),
-_botonGrabar()
-        ],
-      ),
-      )
-    );
+        ));
   }
 
   _botonGrabar() {
     return RaisedButton(
-      
-      onPressed: (){
-        
-      },
-      color: Colors.blueAccent,
-      child: Text('Grabar', 
-      style: botonGrabar,
-      )
-    );
+        onPressed: () {},
+        color: Colors.blueAccent,
+        child: Text(
+          'Grabar',
+          style: botonGrabar,
+        ));
+  }
+
+  _creartarjeta(String foto) {
+  return Container(
+    height: 145,
+    width: 225,
+    child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: Image.asset(foto, fit: BoxFit.cover)),
+  );
   }
 }

@@ -13,8 +13,11 @@ AppEstado reducer(AppEstado previoEstado, dynamic accion) {
   if (accion is ObtenerProveedor) {
       nuevoEstado.proveedores = accion.proveedores;
   }
+  
 
-
+  if (accion is ObtenerVideos) {
+      nuevoEstado.videos = accion.videos;
+  }
 
   if (accion is CambiarParametroConsulta) {
       nuevoEstado.parametroConsulta = accion.parametroConsulta;

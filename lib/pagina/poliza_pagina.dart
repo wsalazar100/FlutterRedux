@@ -102,6 +102,7 @@ class _PolizaPaginaState extends State<PolizaPagina> {
       getNavItem(Icons.map, "Localizacion", "/localizacion"),
       getNavItem(Icons.notifications, "Notificacion", "/notificacion"),
       getNavItem(Icons.people, "Proveedores", "/proveedor"),
+      getNavItem(Icons.people, "Videos", "/video"),
       // getNavItem(Icons.chat, "Chatear con asistente", "/asistente"),
       getNavItem(Icons.account_circle, "Configuracion", "/configuracion"),
       getNavItem(Icons.close, "Salir", "/salida"),

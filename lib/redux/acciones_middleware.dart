@@ -10,6 +10,7 @@ import 'package:appdosinteligente/modelo/parametro_model.dart';
 import 'package:appdosinteligente/modelo/proveedor_model.dart';
 import 'package:appdosinteligente/modelo/ubicacion_model.dart';
 import 'package:appdosinteligente/modelo/usuario_modelo.dart';
+import 'package:appdosinteligente/modelo/video_model.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 
@@ -45,6 +46,22 @@ ThunkAction<AppEstado> obtenerProveedorAccion = (Store<AppEstado> almacen) async
   almacen.dispatch(ObtenerProveedor(proveedores));
 
 };
+
+/// 
+/// Acciones del Middleware VIDEO
+/// 
+ThunkAction<AppEstado> obtenerVideoAccion = (Store<AppEstado> almacen) async {
+  
+  final apidb  = ApiDB();
+
+  final List<VideoModel> videos = await apidb.obtenerVideo();
+
+  print("videos ${videos.length}");
+
+  almacen.dispatch(ObtenerVideos(videos));
+
+};
+
 
 /// 
 /// Acciones del Middleware MENU

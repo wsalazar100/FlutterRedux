@@ -7,6 +7,7 @@ import 'package:appdosinteligente/modelo/poliza_model.dart';
 import 'package:appdosinteligente/modelo/proveedor_model.dart';
 import 'package:appdosinteligente/modelo/ubicacion_model.dart';
 import 'package:appdosinteligente/modelo/usuario_modelo.dart';
+import 'package:appdosinteligente/modelo/video_model.dart';
 
 
 /// 
@@ -103,5 +104,12 @@ class ObtenerUbicacion {
    ObtenerUbicacion(this._ubicacion);
    UbicacionModel get ubicacion => this._ubicacion;
 }
+
+class ObtenerVideos {
+   List<VideoModel> _videos;
+   ObtenerVideos(this._videos);
+   List<VideoModel> get videos => this._videos;
+}
+
 
 

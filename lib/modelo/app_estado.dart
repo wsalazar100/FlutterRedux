@@ -6,6 +6,7 @@ import 'package:appdosinteligente/modelo/poliza_model.dart';
 import 'package:appdosinteligente/modelo/proveedor_model.dart';
 import 'package:appdosinteligente/modelo/ubicacion_model.dart';
 import 'package:appdosinteligente/modelo/usuario_modelo.dart';
+import 'package:appdosinteligente/modelo/video_model.dart';
 import 'package:flutter/material.dart';
 
 import 'menu_model.dart';
@@ -18,6 +19,8 @@ class EstadoInicial {
    List<NotificacionModel> notificaciones = [new NotificacionModel()];
    UbicacionModel ubicacion = CONS_UBICACION_INICIAL;
    List<ProveedorModel> proveedores= [];
+   List<VideoModel> videos = [];
+
 }
 
 class AppEstado {
@@ -28,6 +31,8 @@ class AppEstado {
   List<NotificacionModel> notificaciones;
   UbicacionModel ubicacion;
   List<ProveedorModel> proveedores;
+  List<VideoModel> videos;
+
 
   AppEstado({@required EstadoInicial estadoInicial}) {
       this.polizas = estadoInicial.polizas;
@@ -37,6 +42,7 @@ class AppEstado {
       this.notificaciones = estadoInicial.notificaciones;
       this.ubicacion = estadoInicial.ubicacion;
       this.proveedores = estadoInicial.proveedores;
+      this.videos = estadoInicial.videos;
   }
 
 
@@ -48,6 +54,7 @@ class AppEstado {
     notificaciones = otroEstado.notificaciones;
     ubicacion = otroEstado.ubicacion;
     proveedores = otroEstado.proveedores;
+    videos = otroEstado.videos;
   }
 
   
