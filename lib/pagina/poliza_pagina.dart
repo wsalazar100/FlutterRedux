@@ -1,5 +1,4 @@
-
-import 'package:appdosinteligente/constantes/menu_lateral.dart';
+import 'package:appdosinteligente/constantes/interface.dart';
 import 'package:appdosinteligente/datos/datos_prueba.dart';
 import 'package:appdosinteligente/modelo/app_estado.dart';
 import 'package:appdosinteligente/modelo/notificacion_model.dart';
@@ -13,9 +12,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-
-
-
 class PolizaPagina extends StatefulWidget {
   final void Function() onInit;
 
@@ -27,9 +23,9 @@ class PolizaPagina extends StatefulWidget {
   }
 
   getPolizaPorAsegurado(context, parametroConsulta) {
-    StoreProvider.of<AppEstado>(context).dispatch(getPolizaPorAseguradoAccion(parametroConsulta));
+    StoreProvider.of<AppEstado>(context)
+        .dispatch(getPolizaPorAseguradoAccion(parametroConsulta));
   }
-
 
   obtenerMenu(context) {
     StoreProvider.of<AppEstado>(context).dispatch(obtenerMenuAccion);
@@ -40,7 +36,6 @@ class PolizaPagina extends StatefulWidget {
 }
 
 class _PolizaPaginaState extends State<PolizaPagina> {
-
   void initState() {
     super.initState();
     WidgetsBinding.instance
@@ -59,7 +54,6 @@ class _PolizaPaginaState extends State<PolizaPagina> {
 
   _crearPagina(AppEstado appEstado) {
     return Scaffold(
-
       appBar: _crearAppBar(),
       drawer: _crearLateral(context),
       body: _crearBody(appEstado),
@@ -67,8 +61,7 @@ class _PolizaPaginaState extends State<PolizaPagina> {
     );
   }
 
-
- Drawer _crearLateral(BuildContext context) {
+  Drawer _crearLateral(BuildContext context) {
     var headerChild = DrawerHeader(child: Text("Seguro Inteligente"));
     var nosotrosChild = AboutListTile(
         child: Text("Nosostros"),
@@ -79,8 +72,11 @@ class _PolizaPaginaState extends State<PolizaPagina> {
 
     ListTile getNavItem(var icon, String s, String routeName) {
       return ListTile(
-        leading: Icon(icon,size:35, color: Colors.black),
-        title: Text(s,style:itemLateral ,),
+        leading: Icon(icon, size: 35, color: Colors.black),
+        title: Text(
+          s,
+          style: itemLateral,
+        ),
         onTap: () {
           setState(() {
             // pop closes the drawer
@@ -93,9 +89,10 @@ class _PolizaPaginaState extends State<PolizaPagina> {
     }
 
     var myNavChildren = [
-      
       // headerChild,
-      SizedBox(height:60 ,),
+      SizedBox(
+        height: 60,
+      ),
       getNavItem(Icons.person, "Login", "/"),
       getNavItem(Icons.folder_open, "Poliza", "/poliza"),
       // getNavItem(Icons.local_hospital, "Emergencia", "/emergencia"),
@@ -112,63 +109,39 @@ class _PolizaPaginaState extends State<PolizaPagina> {
 
     ListView listView = ListView(children: myNavChildren);
 
-
     return Drawer(
-      child:  Container(
-          decoration: _crearFondoLateral(),
-          child: listView
-      )
-    );
-    
-   
-
+        child: Container(decoration: _crearFondoLateral(), child: listView));
   }
 
-   _crearFondoLateral() {
-      return BoxDecoration(
-            image: new DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage('assets/images/fondo_lateral.jpg'))
-          );
-   }
-   _crearFondoPagina() {
-      return BoxDecoration(
-            image: new DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage('assets/images/fondo_pagina.jpg'))
-          );
-   }
+  _crearFondoLateral() {
+    return BoxDecoration(
+        image: new DecorationImage(
+            fit: BoxFit.cover,
+            image: AssetImage('assets/images/fondo_lateral.jpg')));
+  }
 
-    // ListTile _crearOpcion(var icon, String s, String routeName) {
-    //   return ListTile(
-    //     leading: Icon(icon, color: Colors.black26),
-    //     title: Text(s),
-    //     onTap: () {
-    //       setState(() {
-    //         // pop closes the drawer
-    //         Navigator.of(context).pop();
-    //         // navigate to the route
-    //         Navigator.of(context).pushNamed(routeName);
-    //       });
-    //     },
-    //   );
-    // }
-
+  _crearFondoPagina() {
+    return BoxDecoration(
+        image: new DecorationImage(
+            fit: BoxFit.cover,
+            image: AssetImage('assets/images/fondo_pagina.jpg')));
+  }
 
   _crearAppBar() {
-    return AppBar(title: Text("Polizas"));
+    return AppBar(
+      backgroundColor: Colors.black,
+      title: Text("Polizas"));
   }
 
   _crearBody(AppEstado appEstado) {
     List<Poliza> lst = appEstado.polizas;
     return Container(
       decoration: _crearFondoPagina(),
-      child: _crearContenido(appEstado.polizas),);
-
-
+      child: _crearContenido(appEstado.polizas),
+    );
   }
 
-  _crearContenido(List<Poliza> lst ){
+  _crearContenido(List<Poliza> lst) {
     return Stack(
       children: <Widget>[
         // crearGradientePagina(),
@@ -194,36 +167,100 @@ class _PolizaPaginaState extends State<PolizaPagina> {
       child: Container(
           padding: EdgeInsets.all(15),
           width: 300,
-          height: 150,
+          height: 180,
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              
               children: <Widget>[
-                Text(
-                  'Nro de Poliza: ${poliza.nroPol.toString()}',
-                  style: tituloCard,
-                ),
-                Text(
-                  'Vigencia: ${poliza.fecVigDesde} - ${poliza.fecVigHasta} ',
-                  style: tituloVigencia,
-                ),
-                Text('Asegurado: ${poliza.asegurado}'),
-                Text('Ramo: ${poliza.ramo}'),
-                _crearIconoPDF(),
+                _crearDetalle(poliza),
+                SizedBox(height: 20.0,),
+                _crearIconos(),
               ])),
     ));
   }
 
-  _crearIconoPDF(){
-    return IconButton(
+  _crearDetalle(Poliza poliza) {
+    return Container(
+      alignment: Alignment.centerLeft,
+
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'Nro de Poliza: ${poliza.nroPol.toString()}',
+            style: tituloCard,
+          ),
+          SizedBox(height: 10.0,),
+          Text(
+            'Vigencia: ${poliza.fecVigDesde} - ${poliza.fecVigHasta} ',
+            style: tituloVigencia,
+          ),
+          Text('Asegurado: ${poliza.asegurado}'),
+          Text('Ramo: ${poliza.ramo}'),
+        ],
+      ),
+    );
+  }
+
+  _crearIconos() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        _crearIconoPDF(),
+        _crearIconoVideo(),
+        _crearIconoTelefono(),
+      ],
+    );
+  }
+
+  _crearIconoPDF() {
+    return Container(
+      decoration: BoxDecoration(
+          color: Color(COLOR_FONDO_ICON_BUTTON),
+          borderRadius: BorderRadius.circular(30)),
+      child: IconButton(
         icon: Icon(Icons.file_download, color: Colors.pink),
         tooltip: 'Abrir PDF de la poliza',
         onPressed: () async {
-           String url = "https://www.chubb.com/ec-es/_assets/documents/condiciones-generales-poliza-de-seguro-de-vehiculos.pdf";
-           await launch(url);
+          String url =
+              "https://www.chubb.com/ec-es/_assets/documents/condiciones-generales-poliza-de-seguro-de-vehiculos.pdf";
+          await launch(url);
         },
-      );
+      ),
+    );
   }
 
+  _crearIconoTelefono() {
+    return Container(
+      decoration: BoxDecoration(
+          color: Color(COLOR_FONDO_ICON_BUTTON),
+          borderRadius: BorderRadius.circular(30)),
+      child: IconButton(
+        icon: Icon(Icons.phone, color: Colors.pink),
+        tooltip: 'Llamar a la cia de seguros',
+        onPressed: () async {
+          String telefono = "tel:0999222692";
+          await launch(telefono);
+        },
+      ),
+    );
+  }
+
+  _crearIconoVideo() {
+    return Container(
+      decoration: BoxDecoration(
+          color: Color(COLOR_FONDO_ICON_BUTTON),
+          borderRadius: BorderRadius.circular(30)),
+      child: IconButton(
+        icon: Icon(Icons.videocam, color: Colors.pink),
+        tooltip: 'Abrir video explicación de la poliza',
+        onPressed: () async {
+          String url = "https://www.youtube.com/watch?v=t6kZf9LrXEE";
+          await launch(url);
+        },
+      ),
+    );
+  }
 
   _crearBoton(AppEstado appEstado) {
     return FloatingActionButton.extended(
@@ -231,19 +268,14 @@ class _PolizaPaginaState extends State<PolizaPagina> {
       icon: Icon(Icons.search),
       backgroundColor: Colors.pink,
       onPressed: () {
-
         //widget.getPolizaPorAsegurado(context,new ParametroConsulta(100));
 
-
         widget.obtenerPoliza(context);
-        
-        StoreProvider.of<AppEstado>(context).dispatch(agregarNotificacionAccion(notificacionPrueba));
 
+        StoreProvider.of<AppEstado>(context)
+            .dispatch(agregarNotificacionAccion(notificacionPrueba));
       },
     );
-  } // fin 
-
-
-
+  } // fin
 
 }

@@ -35,7 +35,9 @@ dependencies:
   google_maps_flutter: ^0.5.21+15
   location: ^2.3.5
   barcode_scan: ^1.0.0
-  
+  video_player: ^0.10.5+1
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -75,7 +77,10 @@ flutter:
     - assets/images/animales/reptil_02.jpg
     - assets/images/animales/reptil_03.jpg
     - assets/images/animales/reptil_04.jpg
- 
+    - assets/images/tarjeta_supermaxy.jpg
+    - assets/videos/flora.mp4
+    - assets/images/fondo_animal.jpg
+    - assets/images/fondo_notificacion_animal.jpg   
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

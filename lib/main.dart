@@ -1,7 +1,9 @@
 import 'package:appdosinteligente/pagina/accion_pagina.dart';
+import 'package:appdosinteligente/pagina/inicio_pagina.dart';
 import 'package:appdosinteligente/pagina/login_pagina.dart';
 import 'package:appdosinteligente/pagina/notificacion_pagina.dart';
 import 'package:appdosinteligente/pagina/poliza_pagina.dart';
+import 'package:appdosinteligente/pagina/proceso_pagina.dart';
 import 'package:appdosinteligente/pagina/proveedor_pagina.dart';
 import 'package:appdosinteligente/pagina/usuario_pagina.dart';
 import 'package:appdosinteligente/pagina/video_pagina.dart';
@@ -48,7 +50,7 @@ _crearApp() {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/',
+      initialRoute: '/inicio',
       routes: {
         '/': (context) => LoginPagina(),
         '/poliza': (context) => PolizaPagina(
@@ -60,7 +62,10 @@ _crearApp() {
         '/accion': (context) => AccionPagina(),
         '/notificacion': (context) => NotificacionPagina(),
         '/configuracion': (context) => UsuarioPagina(),
+        '/proceso': (context) => ProcesoPagina(),
         '/video': (context) => VideoPagina(),
+        '/inicio': (context) => InicioPagina(),
+
         '/proveedor': (context) => ProveedorPagina(
            onInit: ()  {
               StoreProvider.of<AppEstado>(context).dispatch(obtenerUbicacionAccion);

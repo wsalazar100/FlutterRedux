@@ -36,6 +36,7 @@ class _ProveedorPaginaState extends State<ProveedorPagina> {
     // obtenerUbicacion();
   }
 
+
   @override
   Widget build(BuildContext context) {
 
@@ -47,11 +48,49 @@ class _ProveedorPaginaState extends State<ProveedorPagina> {
             }));
   }
 
+obtenerMarcasMapa(List<ProveedorModel> lst) {
+   Set<Marker> lstMarcas = {};
+   Marker  ultimaMarca;
+  lst.forEach((proveedor)  {
+  Marker  marcaX =   Marker(
+      markerId: MarkerId(proveedor.idproveedor.toString()),
+      infoWindow: InfoWindow(title: proveedor.proveedor, snippet: proveedor.proveedor),
+      draggable: true,
+      icon: BitmapDescriptor.defaultMarker,
+      onTap: () {
+
+      },
+      position: LatLng( proveedor.lat, proveedor.lon)
+    );  
+
+    lstMarcas.add(marcaX);
+    ultimaMarca=marcaX;
+    
+
+  });
+  //ubica la ultima marca
+  if (lst.length>0) {
+      _ubicacionMarca(ultimaMarca);
+  }
+     
+
+
+  return lstMarcas;
+
+}
   _crearPagina(AppEstado appEstado) {
     return Scaffold(
       appBar: _crearAppBar(),
       body: _crearBody(appEstado),
-      floatingActionButton: _crearBoton(appEstado),
+      floatingActionButton: Container(
+        height: 60,
+        width: double.infinity,
+        child: Column(
+        children: <Widget>[
+              // _botonPosicionActual(appEstado),
+          _botonConsultaProveedor(appEstado)
+        ],
+      ))
     );
   }
 
@@ -68,21 +107,35 @@ class _ProveedorPaginaState extends State<ProveedorPagina> {
 //  }
 
 
-  _crearBoton(AppEstado appEstado)  {
+  _botonPosicionActual(AppEstado appEstado)  {
     return FloatingActionButton.extended(
-        label: Text('Buscar proveedor'),
-        icon: Icon(Icons.search),
+        label: Text('Mi posicion'),
+        icon: Icon(Icons.map),
         backgroundColor: Colors.pink,
         onPressed: () async {
-           await obtenerUbicacion();   await _ubicacionActual(appEstado);
-
-          // await obtenerProveedor();
-          // marcasMapa = obtenerMarcasMapa(appEstado.proveedores);
-          // await _ubicacionMarca(marcasMapa.first);
+           await obtenerUbicacion();   
+           await _ubicacionActual(appEstado);
 
         },
       );
   }
+
+  _botonConsultaProveedor(AppEstado appEstado)  {
+    return FloatingActionButton.extended(
+        label: Text('Buscar proveedor'),
+        icon: Icon(Icons.search),
+        backgroundColor: Colors.pink,
+        onPressed: ()  {
+
+          obtenerProveedor();
+          List<ProveedorModel> lst = appEstado.proveedores;
+          marcasMapa = obtenerMarcasMapa(lst);
+    
+
+        },
+      );
+  }
+
 
 Future<void> _ubicacionActual(AppEstado appEstado) async {
     
@@ -96,7 +149,10 @@ Future<void> _ubicacionActual(AppEstado appEstado) async {
     controller.animateCamera(CameraUpdate.newCameraPosition(posicionCamara));
 
     // marca
+    print('Ubicacion Actual ======> ');
+    print(appEstado.ubicacion);
     marcasMapa.add(obtnerMarcaDesdeUbicacion(appEstado.ubicacion));
+     print(marcasMapa);
   }
 
   Future<void> _ubicacionMarca(Marker marca) async {
@@ -106,7 +162,7 @@ Future<void> _ubicacionActual(AppEstado appEstado) async {
 
     CameraPosition posicionCamara = CameraPosition(
       target: LatLng(marca.position.latitude, marca.position.longitude),
-      zoom: 19.151926040649414);
+      zoom: 14.0);
 
     controller.animateCamera(CameraUpdate.newCameraPosition(posicionCamara));
 
@@ -118,7 +174,7 @@ Future<void> _ubicacionActual(AppEstado appEstado) async {
 
     return CameraPosition(
       target: LatLng(appEstado.ubicacion.lat, appEstado.ubicacion.lon),
-      zoom: 19.151926040649414);
+      zoom: 14.0);
   }
   
 
@@ -138,3 +194,5 @@ Future<void> _ubicacionActual(AppEstado appEstado) async {
       
   }
 } // fin
+
+

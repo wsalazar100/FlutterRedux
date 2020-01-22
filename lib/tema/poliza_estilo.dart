@@ -10,7 +10,7 @@ const subtituloCard =  TextStyle(color: Colors.black, fontSize: 12);
 const mensajeCard =  TextStyle(color: Colors.black, fontSize: 12);
 
 const cuerpo =  TextStyle(color: Colors.black, fontSize: 12);
-const detalleNotificacion =  TextStyle(color: Colors.white, fontSize: 12);
+const detalleNotificacion =  TextStyle(color: Colors.black, fontSize: 12);
 
 
 

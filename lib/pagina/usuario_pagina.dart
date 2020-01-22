@@ -43,7 +43,7 @@ class _UsuarioPaginaState extends State<UsuarioPagina> {
   _crearBoton(AppEstado appEstado) {
     return FloatingActionButton.extended(
       label: Text('Grabar'),
-      icon: Icon(Icons.search),
+      icon: Icon(Icons.save),
       backgroundColor: Colors.pink,
       onPressed: () {},
     );
@@ -57,6 +57,8 @@ class _UsuarioPaginaState extends State<UsuarioPagina> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
+              _creartarjeta("assets/images/tarjeta_supermaxy.jpg"),
+
               CampoTexto(
                 hintText: "Nombre",
               ),
@@ -79,9 +81,9 @@ class _UsuarioPaginaState extends State<UsuarioPagina> {
               CampoTexto(
                 hintText: "Puntos",
               ),
-              _creartarjeta("assets/images/tarjeta_supermaxy.jpg"),
+              
 
-              _botonGrabar()
+              // _botonGrabar()
             ],
           ),
         ));
@@ -99,8 +101,8 @@ class _UsuarioPaginaState extends State<UsuarioPagina> {
 
   _creartarjeta(String foto) {
   return Container(
-    height: 145,
-    width: 225,
+    height: 150,
+    width: double.infinity,
     child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: Image.asset(foto, fit: BoxFit.cover)),

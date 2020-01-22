@@ -47,6 +47,8 @@ class _NotificacionPaginaState extends State<NotificacionPagina> {
     return Scaffold(appBar: _crearAppBar(), body: _crearBody());
   }
 
+
+
   _crearAppBar() {
     return AppBar(title: Text("Notificaciones"));
   }
@@ -55,7 +57,7 @@ _crearFondoPagina() {
       return BoxDecoration(
             image: new DecorationImage(
               fit: BoxFit.cover,
-              image: AssetImage('assets/images/fondo_notificacion.jpg'))
+              image: AssetImage('assets/images/fondo_notificacion_animal.jpg'))
           );
    }
 
@@ -76,8 +78,10 @@ _crearFondoPagina() {
   _crearBody() {
     List<NotificacionModel> lst = _appEstado.notificaciones;
     return Container(
+      width: double.infinity,
+      height: double.infinity,
       decoration: _crearFondoPagina() ,
-    child:  SingleChildScrollView(
+      child:  SingleChildScrollView(
       
       child: Column(children: lst.map((noti) => _crearCard(noti)).toList()),
     ),
@@ -88,7 +92,7 @@ _crearFondoPagina() {
   Widget _crearCard(NotificacionModel notificacion) {
     return Dismissible(
       key: UniqueKey(),
-      background: Container(color: Colors.pink, child: Text('Borrar'),),
+      background: Container(color: Colors.pink, child: _crearMensajeBorrar(),),
       onDismissed: (direction) =>borrarNotificacion(notificacion.idnotificacion),
       child: Card(
         child:Container(
@@ -103,17 +107,20 @@ _crearFondoPagina() {
                   style: tituloCard,
                   textAlign: TextAlign.right,
                 ),
+                // Text(
+                //   'idnotificacion: ${notificacion.idnotificacion}',
+                //   style: detalleNotificacion,
+                // ),
                 Text(
-                  'idnotificacion: ${notificacion.idnotificacion}',
-                  style: detalleNotificacion,
-                ),
-                Text(
-                  'Descripcion: ${notificacion.descripcion}',
+                  ' ${notificacion.descripcion}',  
                   style: detalleNotificacion,
                 ),
               ])) ,)
     );
   }
 
+  _crearMensajeBorrar(){
+    return Text('Borrar');
+  }
   
 } //_NotificacionPaginaState
