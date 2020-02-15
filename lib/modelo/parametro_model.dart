@@ -2,5 +2,13 @@
 
 class ParametroConsulta {
   int codAsegurado;
-  ParametroConsulta(this.codAsegurado);
+  int idPoliza;
+  int idUsuario;
+  int idItem;
+  ParametroConsulta({
+    this.codAsegurado,  
+    this.idPoliza, 
+    this.idUsuario,
+    this.idItem
+    });
 }

@@ -52,7 +52,7 @@ class _AccionPaginaState extends State<AccionPagina> {
   }
 
   _crearAppBar(Poliza poliza) {
-    return AppBar(title: Text("Poliza nro: ${poliza.nroPol}"));
+    return AppBar(title: Text("Poliza nro: ${poliza.nroPoliza}"));
   }
 
   _crearBody(List<Menu> menus) {

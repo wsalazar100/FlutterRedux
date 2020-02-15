@@ -84,7 +84,7 @@ _scaneaCodigo() async {
     codigo = await BarcodeScanner.scan();
     print('codigo $codigo');
   } catch (e) {
-      print("Error en scaneaCodigo :${e.toString()} " );
+      print("Error en scaneheodigo :${e.toString()} " );
   }
 }
 

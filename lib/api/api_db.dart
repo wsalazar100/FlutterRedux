@@ -1,28 +1,40 @@
 import 'dart:convert';
 
 import 'package:appdosinteligente/Sistema/sistema_constante.dart';
+import 'package:appdosinteligente/constantes/api.dart';
 import 'package:appdosinteligente/datos/datos_prueba.dart';
 import 'package:appdosinteligente/modelo/menu_model.dart';
+import 'package:appdosinteligente/modelo/modelo_tipo/tcausa_model.dart';
 import 'package:appdosinteligente/modelo/parametro_model.dart';
 import 'package:appdosinteligente/modelo/poliza_model.dart';
+
 import 'package:appdosinteligente/modelo/proveedor_model.dart';
+import 'package:appdosinteligente/modelo/riesgo_auto.dart';
 import 'package:appdosinteligente/modelo/usuario_modelo.dart';
 import 'package:appdosinteligente/modelo/video_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:appdosinteligente/modelo/poliza_model.dart';
 
 class ApiDB {
-  String _urlBase = "https://segurointeligente-d9f49.firebaseio.com";
+  // String _urlBase = "https://segurointeligente-d9f49.firebaseio.com";
+   String _urlBase = SRV_API;
 
   obtenerPoliza() async {
-    final url = '$_urlBase/polizas.json';
+    // final url = '$_urlBase/polizas.json';
+     final url = '$_urlBase/api/vpoliza';
+
+    
+
+
     Polizas polizas;
     try {
       //con firebase
+        print("Resultado...");  
       final resp = await http.get(url);
       final mapa = json.decode(
           resp.body); //webApi => jsonList y Firebase => map<String, dynamic>
-      polizas = new Polizas.fromMapa(mapa);
+        print(mapa);
+      polizas = new Polizas.fromJsonList(mapa);
 
       // sin firebase
       //  final polizas  = new Polizas();
@@ -55,26 +67,29 @@ class ApiDB {
   } // 
 
   obtenerProveedor() async {
-    final url = '$_urlBase/proveedor.json';
+    // final url = '$_urlBase/proveedor.json';
+    final url = '$_urlBase/api/tproveedor';
+
     //con firebase
     final resp = await http.get(url);
     final mapa = json.decode(
         resp.body); //webApi => jsonList y Firebase => map<String, dynamic>
     print("PROVEEDOR desde firebase...");
     print(mapa);
-    final ProveedoresModel proveedores = new ProveedoresModel.fromMapa(mapa);
+    final ProveedoresModel proveedores = new ProveedoresModel.fromJsonList(mapa);
 
     // sin firebase
     //  final polizas  = new Polizas();
     //  polizas.items = [pol01];
 
     print("PROVEEDOR desde firebase...");
-    print(proveedores.items);
+    print(proveedores.items.length);
 
     return proveedores.items;
   }
 
   obtenerPolizaPorAsegurado(ParametroConsulta parametroConsulta) async {
+    print('obtenerPolizaPorAsegurado ...');
     final url = '$_urlBase/polizas.json';
     //con firebase
     final resp = await http.get(url);
@@ -91,6 +106,53 @@ class ApiDB {
 
     return polizas.items;
   }
+
+  
+
+  // Tablas tipo
+
+    obtenerRiesgoAutoPorPoliza(ParametroConsulta parametroConsulta) async {
+     final url = '$_urlBase/api/poliza/riesgoauto/' + parametroConsulta.idPoliza.toString();
+    // //con firebase
+    final resp = await http.get(url);
+    final mapa = json.decode(resp.body); //webApi => jsonList y Firebase => map<String, dynamic>
+          print("Resultado Riesgos...");    
+        print(mapa);
+    final riesgoAutos = new RiesgoAutos.fromJsonList(mapa);
+
+    // sin firebase
+     //final RiesgoAutos riesgoAutos = new RiesgoAutos();
+     //riesgoAutos.items = autoRiesgos ;
+
+    print("cantiad riesgos de auto desde firebase...");
+    print(riesgoAutos.items.length);
+
+    return riesgoAutos.items;
+  }
+
+    obtenerTCausa() async {
+    // final url = '$_urlBase/polizas.json';
+    // //con firebase
+    // final resp = await http.get(url);
+    // final mapa = json.decode(
+    //     resp.body); //webApi => jsonList y Firebase => map<String, dynamic>
+    // final polizas = new Polizas.fromMapa(mapa);
+
+    // sin firebase
+     final TCausas tcausas = new TCausas();
+     tcausas.items = tcausa;
+
+    print("riesgos de auto desde firebase...");
+    print(tcausas.items);
+
+    return tcausas.items;
+  }
+
+  
+
+
+
+
 
   Future<UsuarioModel> login(LoginModel login) async {
     final url = CONST_URL_AUTENTICACION;

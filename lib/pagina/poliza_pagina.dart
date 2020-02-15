@@ -1,13 +1,13 @@
 import 'package:appdosinteligente/constantes/interface.dart';
 import 'package:appdosinteligente/datos/datos_prueba.dart';
 import 'package:appdosinteligente/modelo/app_estado.dart';
-import 'package:appdosinteligente/modelo/notificacion_model.dart';
+
 import 'package:appdosinteligente/modelo/poliza_model.dart';
 
 import 'package:appdosinteligente/redux/acciones_middleware.dart';
 
 import 'package:appdosinteligente/tema/poliza_estilo.dart';
-import 'package:appdosinteligente/util/interfase.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -40,6 +40,8 @@ class _PolizaPaginaState extends State<PolizaPagina> {
     super.initState();
     WidgetsBinding.instance
         .addPostFrameCallback((_) => widget.obtenerPoliza(context));
+  
+  
   }
 
   @override
@@ -102,6 +104,7 @@ class _PolizaPaginaState extends State<PolizaPagina> {
       getNavItem(Icons.people, "Videos", "/video"),
       // getNavItem(Icons.chat, "Chatear con asistente", "/asistente"),
       getNavItem(Icons.account_circle, "Configuracion", "/configuracion"),
+          getNavItem(Icons.account_circle, "Pre-Reclamo", "/prereclamo"),
       getNavItem(Icons.close, "Salir", "/salida"),
 
       //  nosotrosChild
@@ -167,14 +170,14 @@ class _PolizaPaginaState extends State<PolizaPagina> {
       child: Container(
           padding: EdgeInsets.all(15),
           width: 300,
-          height: 180,
+          height: 200,
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               
               children: <Widget>[
                 _crearDetalle(poliza),
                 SizedBox(height: 20.0,),
-                _crearIconos(),
+                _crearIconos(poliza),
               ])),
     ));
   }
@@ -187,33 +190,36 @@ class _PolizaPaginaState extends State<PolizaPagina> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'Nro de Poliza: ${poliza.nroPol.toString()}',
+            'Nro de Poliza: ${poliza.nroPoliza.toString()}',
             style: tituloCard,
           ),
           SizedBox(height: 10.0,),
           Text(
-            'Vigencia: ${poliza.fecVigDesde} - ${poliza.fecVigHasta} ',
+            'Vigencia: ${poliza.fecDesde} - ${poliza.fecHasta} ',
             style: tituloVigencia,
           ),
-          Text('Asegurado: ${poliza.asegurado}'),
+          Text('Broker: ${poliza.broker}'),
           Text('Ramo: ${poliza.ramo}'),
         ],
       ),
     );
   }
 
-  _crearIconos() {
+  _crearIconos(Poliza poliza) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        _crearIconoPDF(),
-        _crearIconoVideo(),
-        _crearIconoTelefono(),
+        _crearIconoPDF(poliza),
+        _crearIconoVideo(poliza),
+        _crearIconoTelefono(poliza),
+        _crearIconoReclamo(poliza),
+
+
       ],
     );
   }
 
-  _crearIconoPDF() {
+  _crearIconoPDF(Poliza poliza) {
     return Container(
       decoration: BoxDecoration(
           color: Color(COLOR_FONDO_ICON_BUTTON),
@@ -229,8 +235,9 @@ class _PolizaPaginaState extends State<PolizaPagina> {
       ),
     );
   }
+ 
 
-  _crearIconoTelefono() {
+  _crearIconoTelefono(Poliza poliza) {
     return Container(
       decoration: BoxDecoration(
           color: Color(COLOR_FONDO_ICON_BUTTON),
@@ -246,7 +253,23 @@ class _PolizaPaginaState extends State<PolizaPagina> {
     );
   }
 
-  _crearIconoVideo() {
+  _crearIconoReclamo(Poliza poliza) {
+    return Container(
+      decoration: BoxDecoration(
+          color: Color(COLOR_FONDO_ICON_BUTTON),
+          borderRadius: BorderRadius.circular(BORDER_RADIUS_BUTTON)),
+      child: IconButton(
+        icon: Icon(Icons.mood_bad, color: Colors.pink),
+        tooltip: 'Notificar el siniestro a la compania',
+        onPressed: () async {
+          Navigator.pushNamed(context, '/prereclamo', arguments: poliza);
+        },
+      ),
+    );
+  }
+
+  
+  _crearIconoVideo(Poliza poliza) {
     return Container(
       decoration: BoxDecoration(
           color: Color(COLOR_FONDO_ICON_BUTTON),

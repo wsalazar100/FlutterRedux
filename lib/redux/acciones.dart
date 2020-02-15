@@ -1,10 +1,13 @@
 
 
 import 'package:appdosinteligente/modelo/menu_model.dart';
+import 'package:appdosinteligente/modelo/modelo_tipo/tcausa_model.dart';
+import 'package:appdosinteligente/modelo/modelo_tipo/tusuario_model.dart';
 import 'package:appdosinteligente/modelo/notificacion_model.dart';
 import 'package:appdosinteligente/modelo/parametro_model.dart';
 import 'package:appdosinteligente/modelo/poliza_model.dart';
 import 'package:appdosinteligente/modelo/proveedor_model.dart';
+import 'package:appdosinteligente/modelo/riesgo_auto.dart';
 import 'package:appdosinteligente/modelo/ubicacion_model.dart';
 import 'package:appdosinteligente/modelo/usuario_modelo.dart';
 import 'package:appdosinteligente/modelo/video_model.dart';
@@ -20,6 +23,18 @@ class obtenerPoliza {
    List<Poliza> get polizas => this._polizas;
 }
 
+class ObtenerRiesgoAutos {
+   List<RiesgoAutoModel> _riesgoAutos;
+   ObtenerRiesgoAutos(this._riesgoAutos);
+   List<RiesgoAutoModel> get riesgoAutos => this._riesgoAutos;
+}
+
+
+class ObtenerTUsuario {
+   List<TUsuarioModel> _tusuario;
+   ObtenerTUsuario(this._tusuario);
+   List<TUsuarioModel> get tusuario => this._tusuario;
+}
 
 class ObtenerProveedor {
    List<ProveedorModel> _proveedores;
@@ -41,8 +56,8 @@ class agregarPoliza {
 } 
 
 class borrarPoliza {
-  int idPv;
-  borrarPoliza( this.idPv);
+  int idPoliza;
+  borrarPoliza( this.idPoliza);
 }
 
 class actualizarPoliza {
@@ -61,6 +76,17 @@ class obtenerMenu {
    List<Menu> get menus => this._menus;
 }
 
+
+
+/// 
+/// Actions del reducer TABLAS TIPO
+/// 
+
+class ObtenerTCausa {
+   List<TCausaModel> _tcausa;
+   ObtenerTCausa(this._tcausa);
+   List<TCausaModel> get tcausa => this._tcausa;
+}
 
 
 /// 

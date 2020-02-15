@@ -1,0 +1,1 @@
+const SRV_API = "http://192.168.1.3/apiSeguros";

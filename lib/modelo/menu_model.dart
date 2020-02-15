@@ -53,7 +53,7 @@ class Menus {
 
     mapa.forEach((id,men) {
       final Menu menu = new Menu.fromJson(men);
-      //poliza.idPv = id; 
+      //poliza.idPoliza = id; 
       items.add( menu );
     });
     

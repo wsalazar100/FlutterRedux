@@ -11,8 +11,33 @@ import 'dart:async';
 
 class ProveedorPagina extends StatefulWidget {
   final void Function() onInit;
-
+  Set<Marker> marcasMapa = {};
   ProveedorPagina({this.onInit});
+  Completer<GoogleMapController> _mapaCtr = Completer();
+
+   obtenerProveedor(context)    {
+         StoreProvider.of<AppEstado>(context).dispatch(obtenerProveedorAccion);
+
+          //_ubicacionMarca(context);
+  }
+
+  obtenerUbicacion(context) async {
+         await StoreProvider.of<AppEstado>(context).dispatch(obtenerUbicacionAccion);
+  }
+ 
+  Future<void> _ubicacionMarca(Marker marca) async {
+    
+
+    final GoogleMapController controller = await _mapaCtr.future;
+
+    CameraPosition posicionCamara = CameraPosition(
+      target: LatLng(marca.position.latitude, marca.position.longitude),
+      zoom: 14.0);
+
+    controller.animateCamera(CameraUpdate.newCameraPosition(posicionCamara));
+
+  }
+
 
   @override
   _ProveedorPaginaState createState() => _ProveedorPaginaState();
@@ -20,20 +45,18 @@ class ProveedorPagina extends StatefulWidget {
 
 class _ProveedorPaginaState extends State<ProveedorPagina> {
 
-  Completer<GoogleMapController> _mapaCtr = Completer();
-  Set<Marker> marcasMapa = {};
 
-  obtenerUbicacion() async {
-         await StoreProvider.of<AppEstado>(context).dispatch(obtenerUbicacionAccion);
-  }
-  obtenerProveedor() {
-         StoreProvider.of<AppEstado>(context).dispatch(obtenerProveedorAccion);
-  }
+  
+
+
 
   // // @override
   void initState() {
     super.initState();
-    // obtenerUbicacion();
+       WidgetsBinding.instance
+        .addPostFrameCallback((_) => widget.obtenerProveedor(context));
+ 
+       //obtenerUbicacion();
   }
 
 
@@ -52,30 +75,33 @@ obtenerMarcasMapa(List<ProveedorModel> lst) {
    Set<Marker> lstMarcas = {};
    Marker  ultimaMarca;
   lst.forEach((proveedor)  {
-  Marker  marcaX =   Marker(
-      markerId: MarkerId(proveedor.idproveedor.toString()),
-      infoWindow: InfoWindow(title: proveedor.proveedor, snippet: proveedor.proveedor),
-      draggable: true,
-      icon: BitmapDescriptor.defaultMarker,
-      onTap: () {
+      Marker  marcaX =   Marker(
+          markerId: MarkerId(proveedor.idproveedor.toString()),
+          infoWindow: InfoWindow(title: proveedor.proveedor, snippet: proveedor.proveedor),
+          draggable: true,
+          icon: BitmapDescriptor.defaultMarker,
+          onTap: () {
 
-      },
-      position: LatLng( proveedor.lat, proveedor.lon)
-    );  
+          },
+          position: LatLng( proveedor.lat, proveedor.lon)
+        );  
 
-    lstMarcas.add(marcaX);
-    ultimaMarca=marcaX;
+        //lstMarcas.add(marcaX);
+        widget.marcasMapa.add(marcaX);
+        ultimaMarca=marcaX;
     
 
   });
+
   //ubica la ultima marca
   if (lst.length>0) {
-      _ubicacionMarca(ultimaMarca);
+    // marcasMapa = lstMarcas;
+    // _ubicacionMarca(ultimaMarca);
   }
      
 
 
-  return lstMarcas;
+  return widget.marcasMapa;
 
 }
   _crearPagina(AppEstado appEstado) {
@@ -113,7 +139,7 @@ obtenerMarcasMapa(List<ProveedorModel> lst) {
         icon: Icon(Icons.map),
         backgroundColor: Colors.pink,
         onPressed: () async {
-           await obtenerUbicacion();   
+           await widget.obtenerUbicacion(context);   
            await _ubicacionActual(appEstado);
 
         },
@@ -125,13 +151,9 @@ obtenerMarcasMapa(List<ProveedorModel> lst) {
         label: Text('Buscar proveedor'),
         icon: Icon(Icons.search),
         backgroundColor: Colors.pink,
-        onPressed: ()  {
-
-          obtenerProveedor();
-          List<ProveedorModel> lst = appEstado.proveedores;
-          marcasMapa = obtenerMarcasMapa(lst);
-    
-
+        onPressed: ()   {
+            widget.obtenerProveedor(context);
+          
         },
       );
   }
@@ -140,7 +162,7 @@ obtenerMarcasMapa(List<ProveedorModel> lst) {
 Future<void> _ubicacionActual(AppEstado appEstado) async {
     
 
-    final GoogleMapController controller = await _mapaCtr.future;
+    final GoogleMapController controller = await widget._mapaCtr.future;
 
     CameraPosition posicionCamara = CameraPosition(
       target: LatLng(appEstado.ubicacion.lat, appEstado.ubicacion.lon),
@@ -151,22 +173,11 @@ Future<void> _ubicacionActual(AppEstado appEstado) async {
     // marca
     print('Ubicacion Actual ======> ');
     print(appEstado.ubicacion);
-    marcasMapa.add(obtnerMarcaDesdeUbicacion(appEstado.ubicacion));
-     print(marcasMapa);
+    widget.marcasMapa.add(obtnerMarcaDesdeUbicacion(appEstado.ubicacion));
+     print(widget.marcasMapa);
   }
 
-  Future<void> _ubicacionMarca(Marker marca) async {
-    
 
-    final GoogleMapController controller = await _mapaCtr.future;
-
-    CameraPosition posicionCamara = CameraPosition(
-      target: LatLng(marca.position.latitude, marca.position.longitude),
-      zoom: 14.0);
-
-    controller.animateCamera(CameraUpdate.newCameraPosition(posicionCamara));
-
-  }
 
 
 
@@ -178,16 +189,21 @@ Future<void> _ubicacionActual(AppEstado appEstado) async {
   }
   
 
-  _crearBody(AppEstado appEstado) {
+  _crearBody(AppEstado appEstado)  {
+    
+   
+    // if (lstMarcas.length>0) 
+    //     _ubicacionMarca(lstMarcas.toList()[0]);
+    
     return Container(
         height: double.infinity,
         width: double.infinity,
         child: GoogleMap(
           mapType: MapType.normal,
           initialCameraPosition: CONS_POSICION_INICIAL,
-          markers: marcasMapa,
+          markers:  obtenerMarcasMapa(appEstado.proveedores),
           onMapCreated: (GoogleMapController controller) { 
-            _mapaCtr.complete(controller);
+            widget._mapaCtr.complete(controller);
           },
         ) 
         ); 

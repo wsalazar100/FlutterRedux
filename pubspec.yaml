@@ -36,6 +36,7 @@ dependencies:
   location: ^2.3.5
   barcode_scan: ^1.0.0
   video_player: ^0.10.5+1
+  shared_preferences: ^0.5.6+1
 
 
 dev_dependencies:

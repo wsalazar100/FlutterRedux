@@ -3,10 +3,14 @@
 import 'package:appdosinteligente/api/api_db.dart';
 
 import 'package:appdosinteligente/api/api_db_local.dart';
+import 'package:appdosinteligente/api/api_riesgo_auto.dart';
 import 'package:appdosinteligente/api/api_ubicacion.dart';
+import 'package:appdosinteligente/api/api_usuario.dart';
 import 'package:appdosinteligente/modelo/app_estado.dart';
+import 'package:appdosinteligente/modelo/modelo_tipo/tcausa_model.dart';
 import 'package:appdosinteligente/modelo/notificacion_model.dart';
 import 'package:appdosinteligente/modelo/parametro_model.dart';
+import 'package:appdosinteligente/modelo/pre_reclamo_model.dart';
 import 'package:appdosinteligente/modelo/proveedor_model.dart';
 import 'package:appdosinteligente/modelo/ubicacion_model.dart';
 import 'package:appdosinteligente/modelo/usuario_modelo.dart';
@@ -48,6 +52,27 @@ ThunkAction<AppEstado> obtenerProveedorAccion = (Store<AppEstado> almacen) async
 };
 
 /// 
+/// Acciones del Middleware PRE-RECLAMO
+/// 
+ThunkAction<AppEstado> grabarPreReclamoAccion (PreReclamoModel preReclamo)  {
+
+  
+   return ( Store<AppEstado> almacen) async  {
+        final apidb  = ApiPreReclamo();
+
+          final resp = await apidb.grabaPreReclamo(preReclamo);
+          print('Respuesta......');
+          print(resp);
+          // print('CODIGO RESPUESTA: ${resp.statusCode}');
+          // print('CUERPO RESPUESTA: ${resp.body}');
+          // aqui falta retorna la respuesta en el estado
+           // almacen.dispatch(ObtenerTCausa(almacen.state.tcausa));
+  };
+
+}
+
+
+/// 
 /// Acciones del Middleware VIDEO
 /// 
 ThunkAction<AppEstado> obtenerVideoAccion = (Store<AppEstado> almacen) async {
@@ -87,6 +112,51 @@ ThunkAction<AppEstado> getPolizaPorAseguradoAccion (ParametroConsulta parametro)
   };
 
 }
+
+//
+// Usuario
+ThunkAction<AppEstado> obtenerUsuarioPorIdAccion (ParametroConsulta parametro)  {
+  
+  return ( Store<AppEstado> almacen) async  {
+
+       final apidb  = ApiUsuario();
+       final usuarios = await apidb.getTUsuario( parametro );
+
+       almacen.dispatch(ObtenerTUsuario(usuarios));
+  };
+
+}
+
+
+/// 
+/// tablas tipo
+/// 
+
+ThunkAction<AppEstado> obtenerRiesgosAutoPorPolizaAccion (ParametroConsulta parametro)  {
+  
+  return ( Store<AppEstado> almacen) async  {
+
+       final apidb  = ApiDB();
+       final riesgoAutos = await apidb.obtenerRiesgoAutoPorPoliza( parametro );
+        print(" consultado ====>");
+        print(riesgoAutos);
+       almacen.dispatch(ObtenerRiesgoAutos(riesgoAutos));
+  };
+
+}
+
+
+ThunkAction<AppEstado> obtenerTCausaAccion = (Store<AppEstado> almacen) async {
+ 
+  final apidb  = ApiDB();
+  final List<TCausaModel> tcausa = await apidb.obtenerTCausa();
+  print("causas...===>");
+  print(tcausa[0].causa);
+  almacen.dispatch(ObtenerTCausa(tcausa));
+
+};
+
+
 
 /// 
 /// Acciones del Middleware LOGIN

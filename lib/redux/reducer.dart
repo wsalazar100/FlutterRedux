@@ -10,10 +10,23 @@ AppEstado reducer(AppEstado previoEstado, dynamic accion) {
   if (accion is obtenerPoliza) {
       nuevoEstado.polizas = accion.polizas;
   }
+
+
+
+    if (accion is ObtenerTUsuario) {
+      nuevoEstado.tusuario = accion.tusuario;
+  }
+  
+
+
   if (accion is ObtenerProveedor) {
       nuevoEstado.proveedores = accion.proveedores;
   }
   
+  if (accion is ObtenerRiesgoAutos) {
+      nuevoEstado.riesgoAutos = accion.riesgoAutos;
+  }
+
 
   if (accion is ObtenerVideos) {
       nuevoEstado.videos = accion.videos;
@@ -32,13 +45,13 @@ AppEstado reducer(AppEstado previoEstado, dynamic accion) {
 
   // borra
   if (accion is borrarPoliza) {
-      nuevoEstado.polizas = nuevoEstado.polizas.where((p) => p.idPv != accion.idPv);
+      nuevoEstado.polizas = nuevoEstado.polizas.where((p) => p.idPoliza != accion.idPoliza);
   }
   
   // actualizacion
   if (accion is actualizarPoliza) {
       nuevoEstado.polizas = nuevoEstado.polizas
-                                       .map((p) => p.idPv == accion.poliza.idPv ? accion.poliza : p)
+                                       .map((p) => p.idPoliza == accion.poliza.idPoliza ? accion.poliza : p)
                                        .toList();
   }
 
@@ -73,6 +86,14 @@ AppEstado reducer(AppEstado previoEstado, dynamic accion) {
   if (accion is ObtenerUbicacion) {
       nuevoEstado.ubicacion = accion.ubicacion;
   }
+
+
+  // REDUCER TABLAS TIPO
+  if (accion is ObtenerTCausa) {
+      nuevoEstado.tcausa = accion.tcausa;
+  }
+
+
 
   return nuevoEstado;
 
